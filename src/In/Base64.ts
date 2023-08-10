@@ -31,7 +31,6 @@ function GetProxyFromVmessURL(data: string): VmessProxyServer {
         throw new ConvertError(`unsupported vmess version: ${config.v}`).WithSource('base64').WithData(data)
     }
     const result: VmessProxyServer = {
-        Cipher: config.type || 'auto',
         ClientAlterID: config.aid ? +config.aid : 0,
         ClientID: config.id,
         Name: config.ps,
