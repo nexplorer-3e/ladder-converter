@@ -31,6 +31,7 @@ function GetProxyFromVmessURL(data: string): VmessProxyServer {
         throw new ConvertError(`unsupported vmess version: ${config.v}`).WithSource('base64').WithData(data)
     }
     const result: VmessProxyServer = {
+        Cipher: config.scy || 'auto',
         ClientAlterID: config.aid ? +config.aid : 0,
         ClientID: config.id,
         Name: config.ps,
@@ -39,6 +40,7 @@ function GetProxyFromVmessURL(data: string): VmessProxyServer {
         SupportUDP: true,
         Transport: config.net || 'tcp',
         TransportSecurity: config.tls ? 'tls' : 'none',
+        ServerName: config.sni || "",
         Type: "vmess",
     }
     if (result.Transport === 'ws') {
