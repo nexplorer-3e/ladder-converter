@@ -7,18 +7,14 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230807.0",
-    "html-loader": "^4.2.0",
-    "ts-loader": "^9.4.4",
     "typescript": "^5.1.6",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
     "wrangler": "^3.5.0"
   },
   "license": "ISC",
   "name": "clash-converter",
   "scripts": {
-    "build": "webpack",
-    "watch": "webpack -w"
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --outdir=dist"
   },
   "version": "1.0.0"
 }
