@@ -4,6 +4,7 @@ import FormatProxyToBase64 from './Out/Base64'
 import FormatProfileForSing from './Out/Sing'
 import FormatProxyForClash from './Out/Clash'
 import FormatProxyForSurge from './Out/Surge'
+import Guide from './guide.html'
 import { ResolveDNSForProxy } from './Processer/dns'
 import { ProxyServer } from './ProxyServer'
 
