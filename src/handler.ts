@@ -1,7 +1,7 @@
 import GetProxyListFromBase64 from './In/Base64'
 import GetProxyListFromClash from './In/Clash'
 import FormatProxyToBase64 from './Out/Base64'
-import FormatProfileForSing from './Out/Sing'
+import FormatProfileForSFA from './Out/Sing'
 import FormatProxyForClash from './Out/Clash'
 import FormatProxyForSurge from './Out/Surge'
 import Guide from './guide.html'
@@ -60,6 +60,9 @@ export async function handleRequest(request: Request): Promise<Response> {
         switch (query.get('to') ?? 'clash') {
             case 'base64':
                 return new Response(FormatProxyToBase64(proxies), { headers })
+            case 'sfa':
+                headers.set("Content-Type", "application/json");
+                return new Response(FormatProfileForSFA(proxies), { headers })
             case 'clash':
                 return new Response(FormatProxyForClash(proxies), { headers })
             case 'surge':
