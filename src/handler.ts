@@ -21,8 +21,9 @@ export async function handleRequest(request: Request): Promise<Response> {
     let data: string
     const headers = new Headers({ 'Content-Type': 'text/plain; charset=utf-8' })
 
+    const ua = new Headers({ 'User-Agent': (query.get("from") ?? "clash") === "clash" ? "Clash" : "v2ray"});
     try {
-        data = await fetch(url, { redirect: 'follow' }).then(response => response.text())
+        data = await fetch(url, { redirect: 'follow', headers: ua}).then(response => response.text())
     } catch (e) {
         return new Response(e.stack || e, { status: 500 })
     }
