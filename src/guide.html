@@ -181,6 +181,12 @@
                     </label>
                 </div>
             </div>
+            <div class="field sfa-override">
+                <label class="label">重载 route 字段 (仅对 SFA 有效)</label>
+                <div class="control">
+                    <input class="input" type="text" name="sfa-route-base64" placeholder="route 对象的 base64，留空保持默认">
+                </div>
+            </div>
         </form>
         <div class="field is-grouped actions">
             <div class="control">
@@ -220,6 +226,7 @@
             const from = document.querySelector('input[name=from]:checked').value;
             const to = document.querySelector('input[name=to]:checked').value;
             const resolve = document.querySelector('input[name=resolve]').checked;
+            const sfaRoute = document.querySelector('input[name=sfa-route-base64]').value;
             if (!url) {
                 return;
             }
@@ -232,6 +239,10 @@
 
             if (to !== 'clash') {
                 result += '&to=' + encodeURIComponent(to);
+            }
+
+            if (to === 'sfa') {
+                if (sfaRoute) result += `&route=${encodeURIComponent(sfaRoute)}`
             }
 
             if (resolve) {

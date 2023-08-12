@@ -1,3 +1,4 @@
+import { Base64, toBase64 } from 'js-base64'
 import { ConvertError } from '../Error'
 import { ProxyServer } from '../ProxyServer'
 
@@ -87,7 +88,7 @@ function FormatProxyForSing(ProxyList: ProxyServer[]): any[] {
     return proxies
 }
 
-export default function FormatProfileForSFA(ProxyList: ProxyServer[]): string {
+export default function FormatProfileForSFA(ProxyList: ProxyServer[], overrideRoute: string|undefined): string {
     let template: any = {
         "dns": {
             "servers": [
@@ -182,6 +183,10 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[]): string {
     for (const outbound of outbounds) {
         template.outbounds.push(outbound);
         template.outbounds[0].outbounds.push(outbound.tag);
+    }
+    if (overrideRoute) {
+        const route = JSON.parse(Base64.decode(overrideRoute));
+        template.route = route;
     }
     return JSON.stringify(template)
 }

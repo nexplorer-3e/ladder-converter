@@ -63,7 +63,7 @@ export async function handleRequest(request: Request): Promise<Response> {
                 return new Response(FormatProxyToBase64(proxies), { headers })
             case 'sfa':
                 headers.set("Content-Type", "application/json");
-                return new Response(FormatProfileForSFA(proxies), { headers })
+                return new Response(FormatProfileForSFA(proxies, query.get('route')), { headers })
             case 'clash':
                 return new Response(FormatProxyForClash(proxies), { headers })
             case 'surge':
