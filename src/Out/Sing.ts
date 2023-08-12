@@ -133,6 +133,11 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[]): string {
         ],
         "outbounds": [
             {
+                "type": "selector",
+                "tag": "select",
+                "outbounds": [],
+            },
+            {
                 "type": "direct",
                 "tag": "direct"
             },
@@ -168,6 +173,9 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[]): string {
         }
     }
     const outbounds = FormatProxyForSing(ProxyList)
-    template["outbounds"].push(...outbounds)
+    for (const outbound of outbounds) {
+        template.outbounds.push(outbound);
+        template.outbounds[0].outbounds.push(outbound.tag);
+    }
     return JSON.stringify(template)
 }
