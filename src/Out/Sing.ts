@@ -139,6 +139,11 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[], overrideRo
                 "outbounds": [],
             },
             {
+                "type": "urltest",
+                "tag": "auto",
+                "outbounds": [],
+            },
+            {
                 "type": "direct",
                 "tag": "direct"
             },
@@ -183,6 +188,7 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[], overrideRo
     for (const outbound of outbounds) {
         template.outbounds.push(outbound);
         template.outbounds[0].outbounds.push(outbound.tag);
+        template.outbounds[1].outbounds.push(outbound.tag);
     }
     if (overrideRoute) {
         const route = JSON.parse(Base64.decode(overrideRoute));
