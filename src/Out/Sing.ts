@@ -151,6 +151,12 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[]): string {
             }
         ],
         "route": {
+            "geosite": {
+                "download_url": "https://ghproxy.com/github.com/soffchen/sing-geosite/releases/latest/download/geosite.db"
+            },
+            "geoip": {
+                "download_url": "https://ghproxy.com/github.com/soffchen/sing-geoip/releases/latest/download/geoip.db"  
+            },
             "rules": [
                 {
                     "protocol": "dns",
