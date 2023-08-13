@@ -184,7 +184,13 @@
             <div class="field sfa-override">
                 <label class="label">重载 route 字段 (仅对 SFA 有效)</label>
                 <div class="control">
-                    <input class="input" type="text" name="sfa-route-base64" placeholder="route 对象的 base64，留空保持默认">
+                    <input class="input" type="text" name="sfa-route" placeholder="route 对象的 stringify，留空保持默认">
+                </div>
+            </div>
+            <div class="field sfa-override">
+                <label class="label">重载 experimental.clash-api 字段 (仅对 SFA 有效)</label>
+                <div class="control">
+                    <input class="input" type="text" name="sfa-clashapi" placeholder="对象的 stringify, 留空保持默认">
                 </div>
             </div>
         </form>
@@ -226,7 +232,12 @@
             const from = document.querySelector('input[name=from]:checked').value;
             const to = document.querySelector('input[name=to]:checked').value;
             const resolve = document.querySelector('input[name=resolve]').checked;
-            const sfaRoute = document.querySelector('input[name=sfa-route-base64]').value;
+            const sfaRoute = document.querySelector('input[name=sfa-route]').value;
+            const sfaClashApi = document.querySelector('input[name=sfa-clashapi]').value;
+            const sfaOverride = JSON.stringify({
+                route: sfaRoute,
+                clashapi: sfaClashApi
+            });
             if (!url) {
                 return;
             }
@@ -242,7 +253,7 @@
             }
 
             if (to === 'sfa') {
-                if (sfaRoute) result += `&route=${encodeURIComponent(sfaRoute)}`
+                result += `&sfacfg=${encodeURIComponent(sfaOverride)}`
             }
 
             if (resolve) {

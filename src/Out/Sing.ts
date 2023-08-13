@@ -88,7 +88,7 @@ function FormatProxyForSing(ProxyList: ProxyServer[]): any[] {
     return proxies
 }
 
-export default function FormatProfileForSFA(ProxyList: ProxyServer[], overrideRoute: string|undefined): string {
+export default function FormatProfileForSFA(ProxyList: ProxyServer[], overrideConfig: string): string {
     let template: any = {
         "dns": {
             "servers": [
@@ -107,6 +107,17 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[], overrideRo
                 }
             ],
             "rules": [
+                {
+                    "domain": [
+                        "clash.razord.top",
+                        "yacd.haishan.me"
+                    ],
+                    "server": "local"
+                },
+                {
+                    "clash_mode": "direct",
+                    "server": "local"
+                },
                 {
                     "geosite": "category-ads-all",
                     "server": "block",
@@ -161,6 +172,17 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[], overrideRo
         "route": {
             "rules": [
                 {
+                    "clash_mode": "direct",
+                    "outbound": "direct"
+                },
+                {
+                    "domain": [
+                        "clash.razord.top",
+                        "yacd.haishan.me"
+                    ],
+                    "outbound": "direct"
+                },
+                {
                     "protocol": "dns",
                     "outbound": "dns-out"
                 },
@@ -178,6 +200,12 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[], overrideRo
                 }
             ],
             "auto_detect_interface": true
+        },
+        "experimental": {
+            "clash_api": {
+                "external_controller": "127.0.0.1:9090",
+                "store_selected": true
+            }
         }
     }
     const outbounds = FormatProxyForSing(ProxyList)
@@ -186,9 +214,12 @@ export default function FormatProfileForSFA(ProxyList: ProxyServer[], overrideRo
         template.outbounds[0].outbounds.push(outbound.tag);
         template.outbounds[1].outbounds.push(outbound.tag);
     }
-    if (overrideRoute) {
-        const route = JSON.parse(Base64.decode(overrideRoute));
-        template.route = route;
+    const override = JSON.parse(overrideConfig);
+    if (override["route"]) {
+        template.route = override.route;
+    }
+    if (override["clashapi"]) {
+        template.experimental.clash_api = override.clashapi;
     }
     return JSON.stringify(template)
 }
